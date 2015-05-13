@@ -1,15 +1,15 @@
 ---
 - name: Enable Logstash Repository
-  apt_repository: repo="{{ logstash_apt_repo }}" 
+  apt_repository: repo="{{ logstash_apt_repo }}"
                   state=present
 
 - name: Add Logstash Repo Key
-  apt_key: url="{{ logstash_repo_key }}" 
+  apt_key: url="{{ logstash_repo_key }}"
            state=present
 
 - name: Install Logstash and Logstash-Contrib
-  apt: pkg={{ item.package }} 
-       update_cache=yes 
+  apt: pkg={{ item.package }}
+       update_cache=yes
        state=latest
   with_items: logstash_packages
 
@@ -25,3 +25,6 @@
    - restart logstash
   tags:
    - logstash_conf
+
+
+- file: path=/etc/init.d/logstash state=absent

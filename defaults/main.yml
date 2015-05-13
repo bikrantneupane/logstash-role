@@ -5,8 +5,10 @@ logstash_python_utils:
  - { package: "python-pycurl" }
  - { package: "python-apt" }
 
+#FIXME ability to override jdk version
 open_jdk_rh: "java-1.7.0-openjdk"
-open_jdk_deb: "openjdk-7-jre"
+apt_openjdk_java_package: "openjdk-7-jre"
+apt_install_openjdk_java: "true"
 
 logstash_version: "none"
 

@@ -1,12 +1,19 @@
 # {{ ansible_managed }}
 
-{% if logstash_filters is defined %}
 filter {
-{% for key,value in logstash_filters.iteritems() %}
- {{ key }} {
-   {{ value }}
- }
+  if [type] == "kibana-log" {
+    json {
+      source => "message"
+    }
+  }
+{% if logstash_filters is defined %}
+  else {
+    {% for key,value in logstash_filters.iteritems() %}
+    {{ key }} {
+      {{ value }}
+    }
 
-{% endfor %}
-}
+    {% endfor %}
+  }
 {% endif %}
+}
