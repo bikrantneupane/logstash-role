@@ -1,13 +1,6 @@
 # {{ ansible_managed }}
 
 input {
-  file {
-    path            => "/opt/kibana/logs/kibana.log"
-    start_position  => "beginning"
-    tags            => ["kibana"]
-    type            => "kibana-access-log"
-    sincedb_path    => "/var/lib/logstash/kibana-logs.sincedb"
-  }
 
 {% for key,value in logstash_inputs.iteritems() %}
  {{ key }} {

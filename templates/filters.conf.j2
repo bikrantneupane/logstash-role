@@ -1,19 +1,14 @@
 # {{ ansible_managed }}
 
 filter {
-  if [type] == "kibana-log" {
-    json {
-      source => "message"
-    }
-  }
-{% if logstash_filters is defined %}
-  else {
-    {% for key,value in logstash_filters.iteritems() %}
-    {{ key }} {
-      {{ value }}
-    }
 
-    {% endfor %}
+  grok {
+    match => { "message" => "%{SYSLOGBASE} %{GREEDYDATA:syslog_message}" }
   }
-{% endif %}
+
+  date {
+    timezone => "UTC"
+    match  => [ "timestamp", "MMM dd YYY HH:mm:ss", "MMM  d YYY HH:mm:ss", "ISO8601", "MMM dd HH:mm:ss" ]
+  }
+
 }
