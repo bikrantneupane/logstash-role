@@ -3,7 +3,10 @@
 filter {
 
   grok {
-    match => { "message" => "%{SYSLOGBASE} %{GREEDYDATA:syslog_message}" }
+    match => [
+      "message", "%{SYSLOGBASE} (?<application>\b[\w-]+\b) %{COMBINEDAPACHELOG}",
+      "message", "%{SYSLOGBASE} %{GREEDYDATA:syslog_message}"
+    ]
   }
 
   date {
